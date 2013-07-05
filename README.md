@@ -1,4 +1,8 @@
 timepicker
 ==========
 
-Simple helper for input fields with an hour:minute selector. Up and down keys to scroll through the hours and minutes
+Simple plugin for input fields to quickly select a time in hour:minute style. 
+
+# Usage
+
+With the up and down keys the user can scroll through the hours. If the shift key is enabled, the minutes are adjusted.
