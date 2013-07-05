@@ -35,4 +35,3 @@ Simple plugin for input fields to quickly select a time in hour:minute style. Wi
 ### Dependencies
 
 * jQuery
-* Twitter bootstrap css

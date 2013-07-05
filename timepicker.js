@@ -7,6 +7,7 @@ $.fn.timepicker = function(args) {
 
   var options = $.extend({
       time    : '08:00',
+      hourStep : 1,
       minStep : 15,
       start   : 0,
       end     : 23
@@ -22,25 +23,33 @@ $.fn.timepicker = function(args) {
     $(this).on('keydown', function (e) {
       // UP or DOWN key is pressed
       if (e.keyCode === 38 || e.keyCode === 40) {
-        time = this.value.split(':', 1);
+        time = this.value.split(':', 2);
         hour = parseInt(time[0]);
         min  = parseInt(time[1]);
+        
+        console.log(min);
 
         if (e.shiftKey)
-          if (e.keyCode === 38)
-            min = min+options.minStep > 59 ? 0 : min+options.minStep;
-          else
-            min = min-options.minStep < 0 ? 60-options.minStep : min-options.minStep;
+          min = e.keyCode === 38 ? 
+            up(min, options.minStep, 59, 0) :
+            down(min, options.minStep, 60, 0);
         else
-          if (e.keyCode === 38)
-            hour = hour+1 > options.end ? options.start : hour+1;
-          else
-            hour = hour-1 < options.start ? options.end : hour-1;
+          hour = e.keyCode === 38 ? 
+            up(hour, options.hourStep, options.end, options.start) :
+            down(hour, options.hourStep, options.end, options.start);
 
         this.value = pad(hour) + ':' + pad(min);
       }
     });
   });
+  
+  function up(current, step, limit, base) {
+    return current + step > limit ? base : current + step;
+  }
+  
+  function down(current, step, limit, base) {
+    return current - step < base ? limit - step : current - step;
+  }
   
   function pad(val) {
     return val < 10 ? '0' + val : val;
